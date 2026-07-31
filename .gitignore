@@ -1,0 +1,11 @@
+
+# Carpetas de Visual Studio
+.vs/
+bin/
+obj/
+
+# Otros archivos temporales
+*.user
+*.userosscache
+*.sln.docstates
+*.db
