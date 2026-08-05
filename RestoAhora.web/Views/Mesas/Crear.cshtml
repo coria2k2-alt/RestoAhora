@@ -1,0 +1,33 @@
+﻿@model Domain.Entities.Mesa
+
+@{
+    ViewData["Title"] = "Crear Mesa";
+}
+
+<h2>Agregar Nueva Mesa</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Crear">
+            <div class="mb-3">
+                <label asp-for="Numero" class="form-label">Número de Mesa</label>
+                <input asp-for="Numero" class="form-control" type="number" required />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Capacidad" class="form-label">Capacidad de personas</label>
+                <input asp-for="Capacidad" class="form-control" type="number" required />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Estado" class="form-label">Estado</label>
+                <select asp-for="Estado" class="form-select">
+                    <option value="Disponible">Disponible</option>
+                    <option value="Ocupada">Ocupada</option>
+                    <option value="Reservada">Reservada</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>

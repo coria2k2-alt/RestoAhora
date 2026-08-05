@@ -1,0 +1,26 @@
+﻿@using Domain.Entities
+@model Mesa
+
+@{
+    ViewData["Title"] = "Eliminar Mesa";
+}
+
+<h2 class="text-danger">¿Estás seguro de que deseas desactivar esta mesa?</h2>
+<hr />
+
+<div class="card col-md-6 mb-3">
+    <div class="card-body">
+        <h5 class="card-title">Mesa #@Model.Numero</h5>
+        <p class="card-text"><strong>Capacidad:</strong> @Model.Capacidad personas</p>
+        <p class="card-text"><strong>Ubicación:</strong> @Model.Ubicacion</p>
+        <p class="card-text"><strong>Estado actual:</strong> @Model.Estado</p>
+    </div>
+</div>
+
+<form asp-action="Eliminar" method="post">
+    <!-- Importante enviar el Id de la mesa que se va a desactivar -->
+    <input type="hidden" asp-for="Id" />
+
+    <button type="submit" class="btn btn-danger">Sí, Desactivar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

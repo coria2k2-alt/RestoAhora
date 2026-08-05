@@ -16,13 +16,14 @@ namespace Infrastructure.Persistence;
 
 public class ApplicationDbContext : DbContext
 {
-    
+    //CONSTRUCTOR
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
 
+    //CREA ENTIDADES
     public DbSet<Mesa> Mesas => Set<Mesa>();
-
+    
     public DbSet<ReservaMesa> Reservas => Set<ReservaMesa>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

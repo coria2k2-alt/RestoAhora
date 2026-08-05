@@ -1,0 +1,43 @@
+﻿@using Domain.Entities
+@using Domain.Enums
+@model Mesa
+
+@{
+    ViewData["Title"] = "Editar Mesa";
+}
+
+<h2>Editar Mesa #@Model.Numero</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Editar" method="post">
+            <!-- CAMPOS OCULTOS: Muy importantes para retener el Id y propiedades sin modificarlas -->
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Activo" />
+
+            <div class="mb-3">
+                <label asp-for="Numero" class="form-label">Número de Mesa</label>
+                <input asp-for="Numero" class="form-control" type="text" required />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Capacidad" class="form-label">Capacidad de personas</label>
+                <input asp-for="Capacidad" class="form-control" type="number" min="1" required />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Ubicacion" class="form-label">Ubicación</label>
+                <input asp-for="Ubicacion" class="form-control" type="text" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Estado" class="form-label">Estado</label>
+                <select asp-for="Estado" asp-items="Html.GetEnumSelectList<EstadoMesa>()" class="form-select"></select>
+            </div>
+
+            <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
