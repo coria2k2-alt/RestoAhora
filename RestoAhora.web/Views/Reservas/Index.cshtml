@@ -1,0 +1,54 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Domain.Entities
+@model IEnumerable<ReservaMesa>
+
+@{
+    ViewData["Title"] = "Gestión de Reservas";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Gestión de Reservas</h2>
+    <a asp-action="Crear" class="btn btn-primary">➕ Nueva Reserva</a>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th># Reserva</th>
+            <th>Cliente</th>
+            <th>Mesa</th>
+            <th>Fecha y Hora</th>
+            <th>Personas</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var reserva in Model)
+            {
+                <tr>
+                    <td>#@reserva.Id</td>
+                    <td>@reserva.NombreCliente</td>
+                    <td>Mesa #@reserva.Mesa?.Numero</td>
+                    <td>@reserva.FechaHoraFinUtc.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@reserva.CantidadComensales personas</td>
+                    <td>
+                        <span class="badge bg-info text-dark">@reserva.Estado</span>
+                    </td>
+                    <td>
+                        <a asp-action="Editar" asp-route-id="@reserva.Id" class="btn btn-sm btn-warning">✏️ Editar</a>
+                        <a asp-action="Cancelar" asp-route-id="@reserva.Id" class="btn btn-sm btn-danger">❌ Cancelar</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center text-muted">No hay reservas registradas actualmente.</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,26 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Domain.Entities
+@model ReservaMesa
+
+@{
+    ViewData["Title"] = "Cancelar Reserva";
+}
+
+<h2 class="text-danger">¿Estás seguro de que deseas cancelar esta reserva?</h2>
+<hr />
+
+<div class="card col-md-6 mb-3">
+    <div class="card-body">
+        <h5 class="card-title">Reserva #@Model.Id - @Model.NombreCliente</h5>
+        <p class="card-text"><strong>Mesa:</strong> Mesa #@Model.Mesa?.Numero</p>
+        <p class="card-text"><strong>Fecha y Hora:</strong> @Model.FechaHoraInicioUtc.ToString("dd/MM/yyyy HH:mm")</p>
+        <p class="card-text"><strong>Personas:</strong> @Model.CantidadComensales</p>
+        <p class="card-text"><strong>Estado Actual:</strong> <span class="badge bg-secondary">@Model.Estado</span></p>
+    </div>
+</div>
+
+<form asp-action="Cancelar" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sí, Cancelar Reserva</button>
+    <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+</form>

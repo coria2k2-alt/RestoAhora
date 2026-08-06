@@ -8,7 +8,7 @@ public class ReservaMesa
     public int Id { get; set; }
 
     public int MesaId { get; set; }
-    public Mesa Mesa { get; set; } = null!;
+    public Mesa? Mesa { get; set; } = null!;
 
     public string NombreCliente { get; set; } = string.Empty;
     public string EmailCliente { get; set; } = string.Empty;

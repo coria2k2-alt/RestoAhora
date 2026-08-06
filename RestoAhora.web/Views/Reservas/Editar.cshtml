@@ -1,0 +1,59 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Domain.Entities
+@model ReservaMesa
+
+@{
+    ViewData["Title"] = "Editar Reserva";
+}
+
+<h2>Editar Reserva #@Model.Id</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Editar" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="FechaCreacionUtc" />
+
+            <div class="mb-3">
+                <label asp-for="NombreCliente" class="form-label">Nombre del Cliente</label>
+                <input asp-for="NombreCliente" class="form-control" required />
+                <span asp-validation-for="NombreCliente" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="MesaId" class="form-label">Mesa Asignada</label>
+                <select asp-for="MesaId" class="form-select" asp-items="ViewBag.Mesas" required>
+                    <option value="">-- Seleccionar Mesa --</option>
+                </select>
+                <span asp-validation-for="MesaId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="FechaHoraInicioUtc" class="form-label">Fecha y Hora</label>
+                <input asp-for="FechaHoraInicioUtc" class="form-control" type="datetime-local" required />
+                <span asp-validation-for="FechaHoraInicioUtc" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="CantidadComensales" class="form-label">Cantidad de Personas</label>
+                <input asp-for="CantidadComensales" class="form-control" type="number" min="1" required />
+                <span asp-validation-for="CantidadComensales" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Estado" class="form-label">Estado</label>
+                <select asp-for="Estado" class="form-select" required>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Confirmada">Confirmada</option>
+                    <option value="Finalizada">Finalizada</option>
+                    <option value="Cancelada">Cancelada</option>
+                </select>
+                <span asp-validation-for="Estado" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>

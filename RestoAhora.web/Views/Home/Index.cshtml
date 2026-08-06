@@ -1,8 +1,92 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Domain.Entities
+@model IEnumerable<ReservaMesa>
+
+@{
+    ViewData["Title"] = "Panel de Control";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mb-4">
+    <h1 class="display-5 fw-bold">Bienvenido a RestoAhora</h1>
+    <p class="lead text-muted">Gestión de mesas y reservas en tiempo real</p>
+</div>
+
+<!-- Tarjetas de Métricas -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white shadow-sm h-100">
+            <div class="card-body text-center">
+                <h6 class="card-title text-uppercase">Total Mesas</h6>
+                <p class="display-6 fw-bold mb-0">@ViewBag.TotalMesas</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white shadow-sm h-100">
+            <div class="card-body text-center">
+                <h6 class="card-title text-uppercase">Disponibles</h6>
+                <p class="display-6 fw-bold mb-0">@ViewBag.MesasDisponibles</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark shadow-sm h-100">
+            <div class="card-body text-center">
+                <h6 class="card-title text-uppercase">Reservadas</h6>
+                <p class="display-6 fw-bold mb-0">@ViewBag.MesasReservadas</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-dark shadow-sm h-100">
+            <div class="card-body text-center">
+                <h6 class="card-title text-uppercase">Reservas de Hoy</h6>
+                <p class="display-6 fw-bold mb-0">@ViewBag.ReservasHoy</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabla con Próximas Reservas -->
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+        <h5 class="mb-0">Próximas Reservas</h5>
+        <a asp-controller="Reservas" asp-action="Crear" class="btn btn-sm btn-success">+ Nueva Reserva</a>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Cliente</th>
+                    <th>Mesa</th>
+                    <th>Fecha y Hora</th>
+                    <th>Personas</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model == null || !Model.Any())
+                {
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">No hay reservas próximas registradas.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var reserva in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold">@reserva.NombreCliente</td>
+                            <td>Mesa #@(reserva.Mesa?.Numero ?? reserva.MesaId.ToString())</td>
+                            <td>@reserva.FechaHoraInicioUtc.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@reserva.CantidadComensales personas</td>
+                            <td>
+                                <span class="badge bg-info text-dark">@reserva.Estado</span>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

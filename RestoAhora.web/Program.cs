@@ -19,6 +19,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IMesaRepository, MesaRepository>();
 
+builder.Services.AddScoped<IReservaMesaRepository, ReservaMesaRepository>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
