@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260809225900_AgregarModuloProductos")]
+    partial class AgregarModuloProductos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,35 +49,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("CategoriaProducto");
                 });
 
-            modelBuilder.Entity("Domain.Entities.DetallePedido", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PedidoId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("PrecioUnitario")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("productoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PedidoId");
-
-                    b.HasIndex("productoId");
-
-                    b.ToTable("DetallesPedido");
-                });
-
             modelBuilder.Entity("Domain.Entities.Mesa", b =>
                 {
                     b.Property<int>("Id")
@@ -105,30 +79,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Mesas");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Pedidos", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("FechaHora")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("MesaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("estado")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MesaId");
-
-                    b.ToTable("Pedidos");
                 });
 
             modelBuilder.Entity("Domain.Entities.Producto", b =>
@@ -213,45 +163,15 @@ namespace Infrastructure.Migrations
                     b.ToTable("Reservas");
                 });
 
-            modelBuilder.Entity("Domain.Entities.DetallePedido", b =>
-                {
-                    b.HasOne("Domain.Entities.Pedidos", "Pedido")
-                        .WithMany("Detalles")
-                        .HasForeignKey("PedidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Producto", "producto")
-                        .WithMany()
-                        .HasForeignKey("productoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Pedido");
-
-                    b.Navigation("producto");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Pedidos", b =>
-                {
-                    b.HasOne("Domain.Entities.Mesa", "Mesa")
-                        .WithMany()
-                        .HasForeignKey("MesaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Mesa");
-                });
-
             modelBuilder.Entity("Domain.Entities.Producto", b =>
                 {
-                    b.HasOne("Domain.Entities.CategoriaProducto", "Categoria")
+                    b.HasOne("Domain.Entities.CategoriaProducto", "categoria")
                         .WithMany("Productos")
                         .HasForeignKey("CategoriaProductoID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Categoria");
+                    b.Navigation("categoria");
                 });
 
             modelBuilder.Entity("Domain.Entities.ReservaMesa", b =>
@@ -273,11 +193,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Mesa", b =>
                 {
                     b.Navigation("Reservas");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Pedidos", b =>
-                {
-                    b.Navigation("Detalles");
                 });
 #pragma warning restore 612, 618
         }

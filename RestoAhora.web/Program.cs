@@ -1,5 +1,6 @@
 using Application.Interfaces;
-
+using Application.Interfaces.Repository;
+using Domain.Entities;
 using Infrastructure.Persistence;
 
 using Infrastructure.Repositories;
@@ -16,11 +17,15 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-
+//-------------------------------------------------------------------------------
 builder.Services.AddScoped<IMesaRepository, MesaRepository>();
 
 builder.Services.AddScoped<IReservaMesaRepository, ReservaMesaRepository>();
 
+builder.Services.AddScoped<ICategoriaProductoRepository, CategoriaProductoRepository>();
+
+builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
+//------------------------------------------------------------------------------
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
